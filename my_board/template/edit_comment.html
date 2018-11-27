@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title%}댓글 수정{% endblock %}
+{% block body %}
+    <h2>댓글 수정</h2>
+        <form action="edit_comment_form" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{comment.id}}">
+            <h4>내용:</h4>
+            <div style="width:50%;">
+                <textarea class="form-control" rows="5" name="content">{{ comment.content }}</textarea><br>
+                <input type="submit" value="수정" class="btn btn-success pull-right">
+                <a href="showpost?id={{comment.board_id}}" class="btn btn-default pull-right" onclick="javascript:return confirm('취소 하시겠습니까?')" style="margin-right: 1%;">취소</a><br>
+            </div>
+        </form>
+{% endblock %}

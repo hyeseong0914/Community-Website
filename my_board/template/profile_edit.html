@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title%}{{user.username}}계정 정보 수정{% endblock %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="form-group">
+            <p>
+                {{ field.label_tag }}
+                <br>
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small style="color: grey">{{ field.help_text | safe}}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}
+                {% endfor %}
+            </p>
+        </div>
+        {% endfor %}
+        <input type="submit" class="btn btn-success" onclick="javascript:return confirm('수정 하시겠습니까?')" value="수정">
+        <a href="profile" style="margin-left: 1%;" class="btn btn-default">취소</a>
+    </form>
+
+{% endblock %}

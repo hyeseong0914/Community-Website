@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        {% endif %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        function edit_comment() {
+            $("#editable[contenteditable='false']").attr('contenteditable', true)
+        }
+        </script>
+    </head>
+    <body>
+        {% include '_navbar.html' %}
+
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% elif message.tags == 'info' %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% else %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="container" style="margin-bottom:5%;">
+            {% block body %}{% endblock%}
+        </div>
+
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="//cdn.ckeditor.com/4.6.2/basic/ckeditor.js"></script>
+        <script type="text/javascript">
+            CKEDITOR.replace('editor')
+        </script>
+
+
+        <footer class="panel panel-default">
+          <div class="panel-footer">
+              <span class="copysymbol">&copy;</span> 2018 Paul Mo ALL RIGHTS RESERVED
+                  <span style="margin-left: 60%;">
+                      <a href="https://hyeseong0914.github.io/Portfolio/" style="margin-right: 1%;" class="support">About Me</a>
+                      <a href="https://facebook.com" style="margin-right: 1%;" class="face">Facebook</a>
+                      <a href="https://github.com/hyeseong0914/portfolio"  class="linked">Github</a>
+                  </span>
+          </div>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title%}Home{% endblock %}
+{% block body %}
+<div style="width: 80%;">
+    <div>
+        <p><h1>{{ dto.title }}</h1><p>
+        <h4>글쓴이: {{ dto.author }}</h4><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> {{ dto.hit }}
+        <a href="list" class="btn btn-default pull-right"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> 목록</a>
+        <hr>
+        {{ dto.content | safe}}
+    </div>
+    <br>
+    날짜: {{ dto.post_date }}<br>
+    {% if row.file_size > 0 %}
+        <a href="download/{{row.id}}">다운로드</a>
+    {% endif %}
+    {% if logged_in == True and dto.author == user.username %}
+
+        <form action="delete_post" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value={{dto.id}}>
+            <input style="margin-top: 1.5%;" type="submit" class="btn btn-danger pull-right" onclick="javascript:return confirm('삭제 하시겠습니까?')" value="삭제">
+        </form>
+        <a href="/edit_post?id={{ dto.id }}" class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 수정</a>
+
+    {% endif %}
+    {% if logged_in == True %}
+        <hr>
+        <form  id="form1" name="form1" method="post" action="comment" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value={{dto.id}}>
+            <div style="width:50%">
+                댓글: <textarea class="form-control" rows="3" name="content" placeholder="댓글을 입력하세요"></textarea>
+                <input type="submit" class="btn btn-success pull-right" value="확인" style="margin-top: 1%;">
+
+            </div>
+        </form>
+    {% endif %}
+
+    <br><hr>
+
+    {% for comment in comments %}
+        <div style="margin-top: 2%;">
+            {{ comment.author}}
+            <span style="margin-left: 2%;">
+                 {{comment.post_date}}<br>
+            </span>
+            {{ comment.content}}<br>
+            {% if logged_in == True and comment.author == user.username %}
+                <form action="delete_comment" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value={{dto.id}}>
+                    <input type="hidden" name="comment_id" value={{comment.id}}>
+                    <input style="margin-top: 1.5%;" type="submit" class="btn btn-danger pull-right" value="삭제" onclick="javascript:return confirm('삭제 하시겠습니까?')">
+                </form>
+            <a href="/edit_comment?id={{comment.id}}" class="btn btn-default "><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> 댓글 수정</a>
+            {% endif %}
+
+        </div>
+    {% endfor %}
+
+    <br><br>
+
+</div>
+{% endblock %}

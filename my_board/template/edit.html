@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title%}게시물 편집{% endblock %}
+{% block body %}
+    <h2>게시물 편집</h2>
+        <form action="edit_post_form" method="post" name="form1" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{dto.id}}">
+            <h4>글쓴이: {{ dto.author }}</h4>
+            제목: <input size="60" name="title" value="{{dto.title}}"><br>
+            <div style="width: 80%;">
+                날짜: {{dto.post_date}}<br>
+                <h4>내용:</h4>
+                <textarea name="content" id="editor">{{dto.content}}</textarea><br>
+            </div>
+            첨부파일:
+            {% if dto.file_size > 0 %}
+                <a href="download?id={{dto.id}}">{{dto.file_name}} ({{file_size}}KB) </a>
+            {% endif %}
+            <input type="file" name="file">
+            <div style="width: 80%;">
+                <input type="submit" value="수정" class="btn btn-success pull-right">
+                <a href="/showpost?id={{dto.id}}" class="btn btn-default pull-right" onclick="javascript:return confirm('취소 하시겠습니까?')" style="margin-right: 1%;">취소</a><br>
+            </div>
+        </form>
+{% endblock %}

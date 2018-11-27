@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index">스토니</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index">Home</a></li>
+            <li><a href="https://hyeseong0914.github.io/Portfolio/">About</a></li>
+            <li><a href="list">커뮤니티</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            {% if logged_in == True %}
+              <li><a href="profile">{{user.username}}</a></li>
+              <li><a href="/dashboard">데쉬보드</a></li>
+              <li><a href="/logout_user">로그아웃</a></li>
+            {% else %}
+              <li><a href="/register">회원가입</a></li>
+              <li><a href="/login_user">로그인</a></li>
+            {% endif %}
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
